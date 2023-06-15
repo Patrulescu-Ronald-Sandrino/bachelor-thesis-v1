@@ -1,6 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend", "backend\backend.csproj", "{E843614D-B952-4104-BEDD-C14280B9F471}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{E843614D-B952-4104-BEDD-C14280B9F471}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bll", "bll\bll.csproj", "{02340F75-593A-4568-A214-16213705094E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dal", "dal\dal.csproj", "{9E9936C2-17B7-4A6E-9A6C-C592B7A66DBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +16,13 @@ Global
 		{E843614D-B952-4104-BEDD-C14280B9F471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E843614D-B952-4104-BEDD-C14280B9F471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E843614D-B952-4104-BEDD-C14280B9F471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02340F75-593A-4568-A214-16213705094E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02340F75-593A-4568-A214-16213705094E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02340F75-593A-4568-A214-16213705094E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02340F75-593A-4568-A214-16213705094E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E9936C2-17B7-4A6E-9A6C-C592B7A66DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E9936C2-17B7-4A6E-9A6C-C592B7A66DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E9936C2-17B7-4A6E-9A6C-C592B7A66DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E9936C2-17B7-4A6E-9A6C-C592B7A66DBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

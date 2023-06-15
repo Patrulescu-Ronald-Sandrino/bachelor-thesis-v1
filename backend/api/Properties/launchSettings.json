@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "backend": {
+    "api": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
