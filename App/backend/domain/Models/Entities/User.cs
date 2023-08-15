@@ -1,4 +1,3 @@
-
 using domain.Models.AuditableEntity;
 using domain.Models.Enums;
 

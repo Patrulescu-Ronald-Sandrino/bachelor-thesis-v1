@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers;
 
-public class AuthController: ApiController
+public class AuthController : ApiController
 {
     private readonly IAuthService _authService;
 
@@ -13,13 +13,13 @@ public class AuthController: ApiController
     {
         _authService = authService;
     }
-    
+
     [HttpPost("/login")]
     public async Task<ActionResult<string>> Login([FromBody] LoginCredentials loginCredentials)
     {
         return await _authService.Login(loginCredentials);
     }
-    
+
     [HttpPost("/register")]
     public async Task<IActionResult> Register([FromBody] RegisterCredentials registerCredentials)
     {

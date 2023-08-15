@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace api.Controllers;
 
 [RouteApiController]
-public class SystemController: ApiController
+public class SystemController : ApiController
 {
     [HttpGet("/health-check")]
     public IActionResult HealthCheck()
