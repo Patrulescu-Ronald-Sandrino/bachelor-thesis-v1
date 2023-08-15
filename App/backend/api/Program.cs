@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Text;
 using bll;
 using bll.Data;
@@ -8,7 +7,6 @@ using domain.Repository;
 using domain.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using DbContext = bll.Data.DbContext;

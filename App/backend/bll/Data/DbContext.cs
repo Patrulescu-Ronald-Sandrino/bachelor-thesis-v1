@@ -24,6 +24,8 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
+
+        modelBuilder.Seed();
     }
 
     private static void UpdateIEntity(object? sender, EntityEntryEventArgs e)
