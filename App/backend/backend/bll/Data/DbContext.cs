@@ -1,3 +1,4 @@
+using System.Data;
 using domain.Models.AuditableEntity;
 using domain.Models.Entities;
 using Microsoft.EntityFrameworkCore;

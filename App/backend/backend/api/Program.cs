@@ -1,7 +1,14 @@
+using System.Reflection;
 using System.Text;
 using bll;
+using bll.Data;
+using bll.Services;
+using bll.Services.Helpers;
+using domain.Repository;
+using domain.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using DbContext = bll.Data.DbContext;
@@ -16,6 +23,12 @@ builder.Services.AddDbContext<DbContext>(options =>
     options.UseSqlServer(appSettings.ConnectionStrings.DefaultConnection);
 });
 
+builder.Services.AddSingleton<JwtTokenHelper>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -24,6 +37,7 @@ builder.Services.AddSwaggerGen(c =>
         description.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
 });
 
+builder.Services.AddOptions();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
     options.TokenValidationParameters = new TokenValidationParameters

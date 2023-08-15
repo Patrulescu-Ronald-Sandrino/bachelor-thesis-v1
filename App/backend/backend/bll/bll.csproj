@@ -29,6 +29,13 @@
       <Reference Include="Microsoft.EntityFrameworkCore.SqlServer">
         <HintPath>..\..\..\..\..\..\..\..\home\kamui\.nuget\packages\microsoft.entityframeworkcore.sqlserver\8.0.0-preview.4.23259.3\lib\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll</HintPath>
       </Reference>
+
+
+        <ItemGroup>
+            <Folder Include="Data\Migrations\"/>
+        </ItemGroup>
+
+
     </ItemGroup>
 
 

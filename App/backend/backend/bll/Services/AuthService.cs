@@ -8,20 +8,20 @@ namespace bll.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly IGenericRepository<User> _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     private readonly JwtTokenHelper _jwtTokenHelper;
 
-    public AuthService(IGenericRepository<User> userRepository, JwtTokenHelper jwtTokenHelper)
+    public AuthService(IUnitOfWork unitOfWork, JwtTokenHelper jwtTokenHelper)
     {
-        _userRepository = userRepository;
         _jwtTokenHelper = jwtTokenHelper;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<string> Login(LoginCredentials loginCredentials)
     {
         // find account in db by email
-        var user = await _userRepository.GetFirst(user => user.Email == loginCredentials.Email);
+        var user = await _unitOfWork.Repository<User>().GetFirst(user => user.Email == loginCredentials.Email);
         if (user == null)
         {
             throw new IAuthService.BadCredentialsException($"User with email {loginCredentials.Email} not found!");
@@ -40,7 +40,7 @@ public class AuthService : IAuthService
 
     private static bool MatchesHash(string text, string hash) =>
         BCrypt.Net.BCrypt.Verify(text, hash);
-    
+
     public async Task Register(RegisterCredentials registerCredentials)
     {
         // create user
@@ -53,7 +53,7 @@ public class AuthService : IAuthService
 
         try
         {
-            await _userRepository.Insert(user);
+            await _unitOfWork.Repository<User>().Insert(user);
         }
         catch (Exception e)
         {
