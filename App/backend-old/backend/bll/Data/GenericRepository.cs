@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using domain.Contracts;
+using domain.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace bll.Data;
@@ -16,7 +16,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         dbSet = context.Set<TEntity>();
     }
 
-    public virtual IEnumerable<TEntity> Get(
+    public virtual async Task<IEnumerable<TEntity>> Get(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
@@ -36,27 +36,31 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
 
         if (orderBy != null)
         {
-            return orderBy(query).ToList();
+            return await orderBy(query).ToListAsync();
         }
-        else
-        {
-            return query.ToList();
-        }
+        
+        return await query.ToListAsync();
     }
 
-    public virtual TEntity? GetById(object id)
+    public async Task<TEntity?> GetFirst(Expression<Func<TEntity, bool>>? filter = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string includeProperties = "")
     {
-        return dbSet.Find(id);
+        return (await Get(filter, orderBy, includeProperties)).First();
     }
 
-    public virtual void Insert(TEntity entity)
+    public virtual async Task<TEntity?> GetById(object id)
     {
-        dbSet.Add(entity);
+        return await dbSet.FindAsync(id);
     }
 
-    public virtual void Delete(object id)
+    public virtual async Task Insert(TEntity entity)
     {
-        var entityToDelete = dbSet.Find(id);
+        await dbSet.AddAsync(entity);
+    }
+
+    public virtual async Task Delete(object id)
+    {
+        var entityToDelete = await dbSet.FindAsync(id);
         Delete(entityToDelete);
     }
 
@@ -70,7 +74,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         dbSet.Remove(entityToDelete);
     }
 
-    public virtual void Update(TEntity entityToUpdate)
+    public virtual async Task Update(TEntity entityToUpdate)
     {
         dbSet.Attach(entityToUpdate);
         context.Entry(entityToUpdate).State = EntityState.Modified;

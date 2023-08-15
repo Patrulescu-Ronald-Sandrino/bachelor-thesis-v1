@@ -4,9 +4,9 @@ namespace domain.Service;
 
 public interface IAuthService
 {
-    string Login(LoginCredentials loginCredentials);
+    Task<string> Login(LoginCredentials loginCredentials);
 
-    void Register(RegisterCredentials registerCredentials);
+    Task Register(RegisterCredentials registerCredentials);
 
     class BadCredentialsException : Exception
     {
