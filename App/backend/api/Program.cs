@@ -13,8 +13,11 @@ using DbContext = bll.Data.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.Configure<AppSettings>(builder.Configuration.GetSection(nameof(AppSettings)));
-var appSettings = builder.Configuration.GetSection(nameof(AppSettings)).Get<AppSettings>();
+#region services
+
+var configuration = builder.Configuration.GetSection(nameof(AppSettings));
+builder.Services.Configure<AppSettings>(configuration);
+var appSettings = configuration.Get<AppSettings>();
 
 builder.Services.AddDbContext<DbContext>(options =>
 {
@@ -26,15 +29,6 @@ builder.Services.AddSingleton<JwtTokenHelper>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.CustomOperationIds(description =>
-        description.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
-});
-
 builder.Services.AddOptions();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
@@ -50,12 +44,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     });
 
 builder.Services.AddControllers();
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.CustomOperationIds(description =>
+        description.TryGetMethodInfo(out var methodInfo) ? methodInfo.Name : null);
+});
+
+#endregion
 
 var app = builder.Build();
 
-app.UsePathBase("/api");
-app.UseRouting();
+#region pipeline
+
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -64,8 +70,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseRouting();
 
 // app.UseCors(options => options
 //     .WithOrigins(new[] { appSettings.FrontendUrl })
@@ -74,6 +79,11 @@ app.UseAuthorization();
 //     .AllowCredentials()
 // );
 
-app.MapControllers();
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+#endregion
 
 app.Run();

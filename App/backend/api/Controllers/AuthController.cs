@@ -14,13 +14,13 @@ public class AuthController : ApiController
         _authService = authService;
     }
 
-    [HttpPost("/login")]
+    [HttpPost]
     public async Task<ActionResult<string>> Login([FromBody] LoginCredentials loginCredentials)
     {
         return await _authService.Login(loginCredentials);
     }
 
-    [HttpPost("/register")]
+    [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterCredentials registerCredentials)
     {
         await _authService.Register(registerCredentials);

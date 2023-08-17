@@ -55,7 +55,7 @@ public class AuthService : IAuthService
         {
             await _unitOfWork.Repository<User>().Insert(user);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             throw;
         }
