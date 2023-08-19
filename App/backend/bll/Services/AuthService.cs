@@ -26,13 +26,13 @@ public class AuthService : IAuthService
         var user = await _unitOfWork.Repository<User>().GetFirst(user => user.Email == authCredentials.Email);
         if (user == null)
         {
-            throw new NotFound("User not found!");
+            throw new NotFoundException("User not found!");
         }
 
         // validate password
         if (!MatchesHash(authCredentials.Password, user.PasswordHash))
         {
-            throw new Unauthorized("Password is incorrect!");
+            throw new UnauthorizedException("Password is incorrect!");
         }
 
         // generate token
@@ -60,7 +60,7 @@ public class AuthService : IAuthService
             if ($"Cannot insert duplicate key row in object 'dbo.{nameof(User)}' with unique index 'IX_{nameof(User)}_Email'. The duplicate key value is ({authCredentials.Email})."
                 .Equals(e.InnerException?.Message))
             {
-                throw new Conflict($"Email is already used!");
+                throw new ConflictException($"Email is already used!");
             }
 
             throw;

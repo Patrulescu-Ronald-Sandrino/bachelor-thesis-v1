@@ -50,8 +50,8 @@ public class ExceptionHandlerMiddleware
 
     private static readonly Dictionary<Type, int> ExceptionToStatusCode = new()
     {
-        { typeof(NotFound), StatusCodes.Status404NotFound },
-        { typeof(Unauthorized), StatusCodes.Status401Unauthorized },
-        { typeof(Conflict), StatusCodes.Status409Conflict }
+        { typeof(NotFoundException), StatusCodes.Status404NotFound },
+        { typeof(UnauthorizedException), StatusCodes.Status401Unauthorized },
+        { typeof(ConflictException), StatusCodes.Status409Conflict }
     };
 }
