@@ -8,8 +8,8 @@ public abstract class AuditableEntityConfiguration<T> : IEntityTypeConfiguration
 {
     void IEntityTypeConfiguration<T>.Configure(EntityTypeBuilder<T> builder)
     {
-        builder
-            .HasKey(auditableEntity => auditableEntity.Id);
+        builder.ToTable(typeof(T).Name);
+        builder.HasKey(auditableEntity => auditableEntity.Id);
 
         Configure(builder);
     }

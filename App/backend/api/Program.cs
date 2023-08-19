@@ -1,4 +1,5 @@
 using System.Text;
+using api.Middlewares;
 using bll;
 using bll.Data;
 using bll.Services;
@@ -61,6 +62,8 @@ var app = builder.Build();
 #region pipeline
 
 // Configure the HTTP request pipeline.
+
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

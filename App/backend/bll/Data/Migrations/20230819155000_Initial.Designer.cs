@@ -12,7 +12,7 @@ using bll.Data;
 namespace bll.Data.Migrations
 {
     [DbContext(typeof(DbContext))]
-    [Migration("20230815150648_Initial")]
+    [Migration("20230819155000_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -65,7 +65,7 @@ namespace bll.Data.Migrations
                     b.HasIndex("Username")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("User", (string)null);
                 });
 #pragma warning restore 612, 618
         }

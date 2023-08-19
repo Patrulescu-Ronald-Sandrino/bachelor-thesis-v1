@@ -1,4 +1,5 @@
 using api.Controllers.Utils;
+using api.DTOs;
 using domain.Service;
 using domain.Service.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,15 +16,20 @@ public class AuthController : ApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<string>> Login([FromBody] LoginCredentials loginCredentials)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse)),
+     ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ErrorResponse)),
+     ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorResponse))]
+    public async Task<ActionResult<LoginResponse>> Login([FromBody] AuthCredentials authCredentials)
     {
-        return await _authService.Login(loginCredentials);
+        return Ok(new LoginResponse { Token = await _authService.Login(authCredentials) });
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] RegisterCredentials registerCredentials)
+    [ProducesResponseType(StatusCodes.Status204NoContent, Type = typeof(void)),
+     ProducesResponseType(StatusCodes.Status409Conflict, Type = typeof(ErrorResponse))]
+    public async Task<IActionResult> Register([FromBody] AuthCredentials authCredentials)
     {
-        await _authService.Register(registerCredentials);
-        return Ok();
+        await _authService.Register(authCredentials);
+        return NoContent();
     }
 }

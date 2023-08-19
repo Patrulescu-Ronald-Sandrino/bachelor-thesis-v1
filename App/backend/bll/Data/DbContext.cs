@@ -22,6 +22,7 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(DbContext).Assembly);
 
         modelBuilder.Seed();
